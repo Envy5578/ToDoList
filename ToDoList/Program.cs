@@ -7,7 +7,7 @@ using ToDoList.DAL;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var connetionString = builder.Configuration.GetConnectionString("PgSql");
 
