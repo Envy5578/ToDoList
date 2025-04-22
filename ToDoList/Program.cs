@@ -9,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+var connetionString = builder.Configuration.GetConnectionString("PgSql");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql();
+    options.UseNpgsql(connetionString);
 });
 
 var app = builder.Build(); 
