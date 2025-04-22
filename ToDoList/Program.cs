@@ -14,7 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql();
 });
 
-var app = builder.Build();
+var app = builder.Build(); 
 
 
 if (!app.Environment.IsDevelopment())
