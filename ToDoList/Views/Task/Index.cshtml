@@ -5,7 +5,7 @@
 
 
 <h4 class="mb-3 text-muted">Создание задачи</h4>
-<form id="createdTaskForm">
+<form id="createdTaskForm" method="post">
     <div class="mb-3">
         <label class="form-label">Название задачи</label>
         <input name="name" type="text" class="form-control"/>
@@ -23,30 +23,33 @@
 {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        var formData = $('#createdTaskForm').serialize();
-        console.log("Отправляемые данные: ", formData);
-        $('#createTask').on('click', function () {            
+        $('#createTask').on('click', function (e) {
+            e.preventDefault(); // Предотвращаем стандартную отправку формы
+
+            var formData = $('#createdTaskForm').serialize();
+            console.log("Отправляемые данные: ", formData);
+
             $.ajax({
-                type:'POST',
+                type: 'POST',
                 url: '/Task/Create',
-                data: $('#createdTaskForm').serialize()
+                data: formData,
                 success: function (response) {
                     Swal.fire({
                         title: 'Информация',
                         text: response.description,
                         icon: 'success',
                         confirmButtonText: 'Окей'
-                    })
+                    });
                 },
-                error: function (response) {
+                error: function (xhr) {
                     Swal.fire({
-                        title: 'Информация',
-                        text: response.responseJson.description,
+                        title: 'Ошибка',
+                        text: xhr.responseJSON?.description || 'Произошла ошибка',
                         icon: 'error',
                         confirmButtonText: 'Окей'
-                    })
+                    });
                 }
-            })
+            });
         });
     </script>
 }

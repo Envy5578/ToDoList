@@ -28,9 +28,13 @@ namespace ToDoList.Service.Implementations
             try
             {
                 _logger.LogInformation($"Запрос на создании задачи - {model.Name}");
+                var today = DateTime.UtcNow.Date;
+                var tomorrow = today.AddDays(1);
+
                 var task = await _taskRepository.GetAll()
-                    .Where(x => x.CreatedDate ==  DateTime.Today)
+                    .Where(x => x.CreatedDate >= today && x.CreatedDate < tomorrow)
                     .FirstOrDefaultAsync(x => x.Name == model.Name);
+
                 if (task != null) {
                     return new BaseResponse<TaskEntity>()
                     {
@@ -44,8 +48,9 @@ namespace ToDoList.Service.Implementations
                     Description = model.Description,
                     IsDone = false,
                     Priority = model.Priority,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,  // Используй UTC время
                 };
+
                 await _taskRepository.Create(task);
 
                 _logger.LogInformation($"Задача создалась: {task.Name} {task.CreatedDate} ");
