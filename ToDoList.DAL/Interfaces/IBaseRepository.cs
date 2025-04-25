@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ToDoList.DAL.Interfaces
 {
-    internal interface IBaseRepository<T>
+    public interface IBaseRepository<T>
     {
         Task Create(T entity);
         IQueryable<T> GetAll();
