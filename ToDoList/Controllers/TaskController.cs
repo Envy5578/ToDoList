@@ -23,7 +23,7 @@ namespace ToDoList.Controllers
             {
                 return Ok(new {description = response.Description});
             }
-            return Ok(response);
+            return BadRequest(new {description = response.Description});
         }
        
     }

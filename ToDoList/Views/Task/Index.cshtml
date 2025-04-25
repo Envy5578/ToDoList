@@ -21,6 +21,7 @@
 
 @section Scripts
 {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var formData = $('#createdTaskForm').serialize();
         console.log("Отправляемые данные: ", formData);
@@ -29,7 +30,22 @@
                 type:'POST',
                 url: '/Task/Create',
                 data: $('#createdTaskForm').serialize()
-            
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.description,
+                        icon: 'success',
+                        confirmButtonText: 'Окей'
+                    })
+                },
+                error: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.responseJson.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                    })
+                }
             })
         });
     </script>
