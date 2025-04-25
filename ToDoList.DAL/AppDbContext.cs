@@ -14,7 +14,7 @@ namespace ToDoList.DAL
             //
         }
     
-        DbSet<TaskEntity> Tasks { get; set; }
+        internal DbSet<TaskEntity> Tasks { get; set; }
 
     }
 }
