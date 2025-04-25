@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList", "ToDoList\ToDoList.csproj", "{2DED8E74-63D1-48C3-A2A7-9529C1DB134A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList", "ToDoList\ToDoList.csproj", "{2DED8E74-63D1-48C3-A2A7-9529C1DB134A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{C1FE9BE8-B6FA-4418-B778-4AE804D9D7D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Domain", "ToDoList.Domain\ToDoList.Domain.csproj", "{82718472-A092-4A9D-9AC1-EE8C1B28D360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Domain", "ToDoList.Domain\ToDoList.Domain.csproj", "{82718472-A092-4A9D-9AC1-EE8C1B28D360}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{45B23E9C-C34F-41BA-844E-C6CAD4BB3754}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.DAL", "ToDoList.DAL\ToDoList.DAL.csproj", "{25E58154-4647-4BC2-BB08-206461A10499}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.DAL", "ToDoList.DAL\ToDoList.DAL.csproj", "{25E58154-4647-4BC2-BB08-206461A10499}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{5F1E16A4-4972-4941-A534-1099255989D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Service", "ToDoList.Service\ToDoList.Service.csproj", "{234F952A-87F5-4194-A070-C40CFC94966F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{25E58154-4647-4BC2-BB08-206461A10499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E58154-4647-4BC2-BB08-206461A10499}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E58154-4647-4BC2-BB08-206461A10499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234F952A-87F5-4194-A070-C40CFC94966F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234F952A-87F5-4194-A070-C40CFC94966F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234F952A-87F5-4194-A070-C40CFC94966F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234F952A-87F5-4194-A070-C40CFC94966F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{82718472-A092-4A9D-9AC1-EE8C1B28D360} = {C1FE9BE8-B6FA-4418-B778-4AE804D9D7D2}
 		{25E58154-4647-4BC2-BB08-206461A10499} = {45B23E9C-C34F-41BA-844E-C6CAD4BB3754}
+		{234F952A-87F5-4194-A070-C40CFC94966F} = {5F1E16A4-4972-4941-A534-1099255989D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B39DAB5-AEAD-4804-B284-85A4F94A8920}

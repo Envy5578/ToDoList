@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ToDoList.Domain.ViewModels.Task;
 
 namespace ToDoList.Controllers
 {
@@ -8,7 +9,11 @@ namespace ToDoList.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateTaskViewModel model)
+        {
+                    return Ok();
+        }
        
     }
 }

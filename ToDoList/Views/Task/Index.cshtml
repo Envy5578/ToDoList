@@ -4,8 +4,8 @@
 }
 
 
-<h4 clas="mb-3 text-muted">Создание задачи</h4>
-<form id="CreatedTaskForm">
+<h4 class="mb-3 text-muted">Создание задачи</h4>
+<form id="createdTaskForm">
     <div class="mb-3">
         <label class="form-label">Название задачи</label>
         <input name="name" type="text" class="form-control"/>
@@ -14,19 +14,22 @@
     <select name="priority" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
     <div class="mb-3">
         <label class="form-label">Описание задачи</label>
-        <textarea name="name" type="text" class="form-control" rows="3"></textarea>
+        <textarea name="description" type="text" class="form-control" rows="3"></textarea>
     </div>
     <button id="createTask" class="btn btn-primary">Создать</button>
 </form>
 
 @section Scripts
 {
-    <script>       
-        $('#createTask').on('click', function () {
+    <script>
+        var formData = $('#createdTaskForm').serialize();
+        console.log("Отправляемые данные: ", formData);
+        $('#createTask').on('click', function () {            
             $.ajax({
                 type:'POST',
-                url:'@Url.Action("Index", "Task")',
-                data: $('#createTaskForm').serialize()
+                url: '/Task/Create',
+                data: $('#createdTaskForm').serialize()
+            
             })
         });
     </script>
