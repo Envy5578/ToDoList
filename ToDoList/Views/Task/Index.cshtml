@@ -37,12 +37,38 @@
     <script>
 
         let table = new DataTable('#taskTableId', {
-            info: false,        // Отключение информации о пагинации
-            serverSide: false,  // Отключение серверной стороны
-            searching: false,   // Отключение поиска
-            paging: false,      // Отключение пагинации
-            sorting: false      // Отключение сортировки
+            info: false,
+            serverSide: false,
+            searching: false,
+            paging: false,
+            ordering: false,
+            ajax: {
+                url: "@Url.Action("TaskHandler")",
+                method: 'POST',
+                dataSrc: 'data' // <<< ВАЖНО: сказать, что данные внутри свойства data
+            },
+            columns: [
+                { data: 'name' },
+                { data: 'priority' },
+                { data: 'description' },
+                { data: 'isDone' },
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<button class="btn btn-success btn-sm center-block">Выполнить</button>';
+                    }
+                }
+            ],
+            createdRow: function (nRow, data, dataIndex) {
+                for (var i = 0; i < $('td', nRow).length - 1; i++) {
+                    $('td', nRow).eq(i).css('cursor', 'pointer');
+                    $('td', nRow).eq(i).on('click', null);
+                }
+                $('td button', nRow).on('click', null);
+            }
         });
+
 
 
         $('#createTask').on('click', function (e) {
