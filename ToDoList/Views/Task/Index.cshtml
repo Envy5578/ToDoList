@@ -18,6 +18,20 @@
     </div>
     <button id="createTask" class="btn btn-primary">Создать</button>
 </form>
+
+<br />
+
+<div class="row">
+    <div class="form-group col-md-6">
+        <label class="col-form-label">Название</label>
+        <input name="nameTask" type="text" class="form-control" />
+    </div>
+    <div class="form-group col-md-6">
+        <label class="col-form-label">Приоритет</label>
+        <select id="prioritySearch" class="form-control mb-3" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    </div>
+</div>
+
 <table class="table table-dark table-hover" id="taskTableId">
     <thead>
         <tr>
@@ -45,7 +59,26 @@
             ajax: {
                 url: "@Url.Action("TaskHandler")",
                 method: 'POST',
-                dataSrc: 'data' // <<< ВАЖНО: сказать, что данные внутри свойства data
+                dataSrc: 'data', // <<< ВАЖНО: сказать, что данные внутри свойства data
+                data: function(d) { // Здесь передаём модель
+                    var model = {
+                        Name: $('input[name="nameTask"]').val(),
+                        Priority: $('#prioritySearch option:selected').val()  // исправил селектор на :selected
+                    };
+                    return model; // возвращаем модель данных
+                },
+                success: function (response) {
+                    // Скрываем таблицу перед обновлением
+                    $('#taskTableId').addClass('table-hidden');
+
+                    // Обновляем данные в таблице
+                    table.clear().rows.add(response.data).draw();
+
+                    // Плавно показываем таблицу после обновления
+                    setTimeout(function () {
+                        $('#taskTableId').removeClass('table-hidden');
+                    }, 500); // Обновляем таблицу с новыми данными
+                }
             },
             columns: [
                 { data: 'name' },
@@ -68,7 +101,6 @@
                 $('td button', nRow).on('click', null);
             }
         });
-
 
 
         $('#createTask').on('click', function (e) {
@@ -98,6 +130,11 @@
                     });
                 }
             });
+        });
+        $('input[name="nameTask"], #prioritySearch').on('input change', function () {
+            // Скрываем таблицу перед обновлением
+            $('#taskTableId').addClass('table-hidden');
+            table.ajax.reload(); // Перезагружаем таблицу с новыми фильтрами
         });
     </script>
 }
