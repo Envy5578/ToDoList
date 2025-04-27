@@ -14,5 +14,7 @@ namespace ToDoList.Service.Interfaces
     {
         Task<IBaseResponse<TaskEntity>> Create(CreateTaskViewModel model); 
         Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter taskFilter);
+        Task<IBaseResponse<bool>> EndTask(long id);
+        Task<IBaseResponse<IEnumerable<TaskComletedViewModel>>> GetCompletedTask();
     }
 }

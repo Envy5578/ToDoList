@@ -75,11 +75,83 @@ namespace ToDoList.Service.Implementations
             }
         }
 
+        public async Task<IBaseResponse<bool>> EndTask(long id)
+        {
+            try
+            {
+                var task = await _taskRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                if(task == null)
+                {
+                    return new BaseResponse<bool>()
+                    {
+                        Description = "Задача не найдена",
+                        StatusCode = StatusCode.TaskNotFound
+                    };
+                }
+                task.IsDone = true;
+                await _taskRepository.Update(task);
+                return new BaseResponse<bool>()
+                {
+                    Description = "Задача завершена",
+                    StatusCode = StatusCode.OK
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[TaskService.EndTask]: {ex.Message}");
+                return new BaseResponse<bool>()
+                {
+                    Description = $"{ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<IEnumerable<TaskComletedViewModel>>> GetCompletedTask()
+        {
+            try
+            {
+                var today = DateTime.UtcNow.Date; // Используем UTC время
+                var tomorrow = today.AddDays(1);
+
+                // Получаем завершённые задачи за сегодняшний день
+                var tasks = await _taskRepository.GetAll()
+                    .Where(x => x.IsDone)
+                    //.Where(x => x.Created >= today && x.Created < tomorrow) // Используем UTC
+                    .Select(x => new TaskComletedViewModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Description = x.Description
+                    })
+                    .ToListAsync();
+
+                // Возвращаем успешный ответ с данными
+                return new BaseResponse<IEnumerable<TaskComletedViewModel>>()
+                {
+                    Data = tasks,
+                    StatusCode = StatusCode.OK
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[TaskService.GetCompletedTask]: {ex.Message}");
+
+                return new BaseResponse<IEnumerable<TaskComletedViewModel>>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = "Произошла ошибка при загрузке завершённых задач"
+                };
+            }
+        }
+
+
         public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter)
         {
             try
             {
                 var tasks = await _taskRepository.GetAll()
+                    .Where(x => !x.IsDone)
                     .WhereIf(!string.IsNullOrWhiteSpace(filter.Name), x => x.Name == filter.Name)
                     .WhereIf(filter.Priority.HasValue, x => x.Priority == filter.Priority)
                     .Select(x => new TaskViewModel()

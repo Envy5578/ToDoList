@@ -28,10 +28,26 @@ namespace ToDoList.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> TaskHandler(TaskFilter filter)
-            {
+        {
             var response = await _taskService.GetTasks(filter);
             return Json( new { data = response.Data});
         }
-       
+        [HttpPost]
+        public async Task<IActionResult> EndTask(long id)
+        {
+            var response = await _taskService.EndTask(id);
+            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return Ok(new { description = response.Description });
+            }
+            return BadRequest(new { description = response.Description });
+        }
+        public async Task<IActionResult> GetCompletedTask()
+        {
+            var result = await _taskService.GetCompletedTask();
+            return Json(new {data = result.Data});
+        }
+
+
     }
 }
